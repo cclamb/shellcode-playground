@@ -1,9 +1,22 @@
-# clang -dynamiclib -o libTest.A.dylib -Wl,-no_pie printer.c
-# clang -o test -Wl,-no_pie test.c libTest.A.dylib
-
+#
+# ASM build sequence with printer.c; this takes the C file, converts to 
+# ASM, compiles ASM to object code, and links the object code for 
+# execution. I'm not sure if this is optimal or if all the flags are 
+# required, but this works.
+# 
+# Compile to ASM:
+# 	clang -S -o printer.s printer.c -target armv7s-apple-ios -isysroot SDKs/iPhoneOS9.3.sdk
+#
+# Comple to object code:
+# as -o printer.o -isysroot SDKs/iPhoneOS9.3.sdk -arch armv7s printer.s
+#
+# link into exe:
+# ld -arch armv7s -L SDKs/iPhoneOS9.3.sdk -L SDKs/iPhoneOS9.3.sdk/usr/lib -lsystem -ios_version_min 9.3 -o printer printer.o
+#
 # After building, need to run ldld -S <exename> to codesign
 CC=clang
-OBJ=mem-overflow.o str-overflow.o
+ASM=exit.asm
+OBJ=printer.o engine.o
 SDK_HOME=SDKs
 SDK=$(SDK_HOME)/iPhoneOS9.3.sdk
 # SDK=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk                                        
@@ -40,9 +53,12 @@ ARGS=$(IOS_TARGET) $(DEBUG_FLAGS)
 %.o: %.c
 	$(CC) -c -o $@ $< $(ARGS)
 
+#asm: $(ASM)
+#	$(CC) -o $@ -S $< $(ARGS)
+
 main: $(OBJ)
-	$(CC) -o str-overflow str-overflow.o $(ARGS) $(NO_ASLR_FLAGS)
-	$(CC) -o mem-overflow mem-overflow.o $(ARGS) $(NO_ASLR_FLAGS)
+	$(CC) -o printer printer.o $(ARGS) $(NO_ASLR_FLAGS)
+	$(CC) -o engine engine.o $(ARGS) $(NO_ASLR_FLAGS)
 
 clean:
-	rm *.o str-overflow mem-overflow
+	rm *.o printer engine
