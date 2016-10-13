@@ -1,0 +1,10 @@
+# Ignore object files
+*.o
+
+# Ignore iPhone SDKs
+SDKs/*.sdk/
+
+# Ignore executables and VIM swap files
+str-overflow
+mem-overflow
+*.swp
