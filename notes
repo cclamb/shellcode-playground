@@ -1,0 +1,7 @@
+on linux, we can activate an executable stack using execstack (installable via apt), compiling like this:
+  gcc -fno-stack-protector -z execstack -o stack-engine stack-engine.c
+
+To disable ASLR, we need to do this, as root:
+  echo 0 > /proc/sys/kernel/randomize_va_space
+
+
