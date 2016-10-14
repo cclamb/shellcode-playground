@@ -9,7 +9,7 @@
 
 // This is the shellcode buffer. Insert shellcode into the
 // code variable here, for execution later.
-char shellcode[] = "\xe3\xa0\x00\x00\xe3\xa0\x70\x01\xef\x00\x00\x00";
+char shellcode[] = "\x55\x48\x89\xe5\x31\xc0\xc7\x45\xfc\x00\x00\x00\x00\xc7\x45\xf8\x05\x00\x00\x00\x5d\xc3";
 
 int main(int argc, char *argv[]) {
   //exeshell is a function pointer

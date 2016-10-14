@@ -61,4 +61,5 @@ main: $(OBJ)
 	$(CC) -o engine engine.o $(ARGS) $(NO_ASLR_FLAGS)
 
 clean:
-	rm *.o printer engine
+	rm *.o printer engine 
+	rm -rf *.dSYM
