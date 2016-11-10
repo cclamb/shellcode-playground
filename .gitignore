@@ -8,3 +8,4 @@ SDKs/*.sdk/
 str-overflow
 mem-overflow
 *.swp
+a.out
