@@ -14,6 +14,16 @@
 # ld -arch armv7s -L SDKs/iPhoneOS9.3.sdk -L SDKs/iPhoneOS9.3.sdk/usr/lib -lsystem -ios_version_min 9.3 -o printer printer.o
 #
 # After building, need to run ldld -S <exename> to codesign
+#
+# NOTE: execstack will allow execution from the stack, while -fno-stack-protector will disable canaries
+#
+# To turn off ASLR in a shell, execute: setarch `uname -m` -R /bin/bash
+#
+# To turn off ASLR system-wide: echo 0 | sudo tee /proc/sys/kernel/randomize_va_space
+#
+# see: http://askubuntu.com/questions/318315/how-can-i-temporarily-disable-aslr-address-space-layout-randomization
+# 	https://securityetalii.es/2013/02/03/how-effective-is-aslr-on-linux-systems/
+# 	
 CC=gcc
 ASM=exit.asm
 OBJ=heap-engine.o stack-engine.o

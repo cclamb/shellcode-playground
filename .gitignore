@@ -7,5 +7,10 @@ SDKs/*.sdk/
 # Ignore executables and VIM swap files
 str-overflow
 mem-overflow
+shell
+stack-engine
+heap-engine
 *.swp
 a.out
+find_start
+find_stack
